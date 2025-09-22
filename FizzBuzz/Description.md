@@ -1,19 +1,28 @@
-FizzBuzz
+# FizzBuzz
 
-About this Kata
-This Kata was posted here by someone anonymously. Michael Feathers and EmilyBache performed it at agile2008 when competing in “Programming with the stars” in python, in 4 minutes.
+El módulo **FizzBuzz** es una implementación de la clásica kata que enseña los principios de **TDD (Test-Driven Development)** y desarrollo incremental.  
+Es ideal para practicar:
 
-    -- Difficulty: Easy Good for teaching: TDD , BabySteps
+- Refactoring paso a paso.
+- Implementación guiada por tests.
+- Lógica condicional y manejo de reglas combinadas.
 
-Problem Description
-Imagine the scene. You are eleven years old, and in the five minutes before the end of the lesson, your Maths teacher decides he should make his class more “fun” by introducing a “game”. He explains that he is going to point at each pupil in turn and ask them to say the next number in sequence, starting from one. The “fun” part is that if the number is divisible by three, you instead say “Fizz” and if it is divisible by five you say “Buzz”. So now your maths teacher is pointing at all of your classmates in turn, and they happily shout “one!”, “two!”, “Fizz!”, “four!”, “Buzz!”… until he very deliberately points at you, fixing you with a steely gaze… time stands still, your mouth dries up, your palms become sweatier and sweatier until you finally manage to croak “Fizz!”. Doom is avoided, and the pointing finger moves on.
+---
 
-So of course in order to avoid embarassment infront of your whole class, you have to get the full list printed out so you know what to say. Your class has about 33 pupils and he might go round three times before the bell rings for breaktime. Next maths lesson is on Thursday. Get coding!
+## Objetivo
 
-Write a program that prints the numbers from 1 to 100. But for multiples of three print “Fizz” instead of the number and for the multiples of five print “Buzz”. For numbers which are multiples of both three and five print “FizzBuzz “.
+Crear un programa o función que imprima los números del **1 al 100** siguiendo estas reglas:
+
+1. Si el número es múltiplo de 3, imprimir `"Fizz"`.
+2. Si el número es múltiplo de 5, imprimir `"Buzz"`.
+3. Si el número es múltiplo de **3 y 5**, imprimir `"FizzBuzz"`.
+4. Si no cumple ninguna de las anteriores, imprimir el número.
+
+---
+
+## Ejemplo de salida
 
 
-Sample output:
 - 1
 - 2
 - Fizz
@@ -34,18 +43,35 @@ Sample output:
 - Fizz
 - 19
 - Buzz
-- ... etc up to 100
+- ... hasta 100
 
-Stage 2 - new requirements
-A number is fizz if it is divisible by 3 or if it has a 3 in it
-A number is buzz if it is divisible by 5 or if it has a 5 in it
 
-For example :
-- 53 should return FizzBuzz (contains 5 and 3)
-- 35 should return FizzBuzzBuzz (contains 3 and 5 and is divisible by 5)
+---
 
-Links:
-https://codingdojo.org/kata/FizzBuzz/
+## Reglas avanzadas (Etapa 2)
 
-https://www.codurance.com/katas/fizzbuzz
+Se agregan nuevas reglas para números “efervescentes”:
+
+1. Un número es **Fizz** si:
+    - Es divisible por 3 **o**
+    - Contiene el dígito 3.
+
+2. Un número es **Buzz** si:
+    - Es divisible por 5 **o**
+    - Contiene el dígito 5.
+
+3. Combinaciones:
+    - `"FizzBuzz"` si cumple reglas de Fizz y Buzz simultáneamente.
+    - `"FizzBuzzBuzz"` si hay concatenaciones de reglas múltiples.
+
+**Ejemplos:**
+
+- `53` → `"FizzBuzz"` (contiene 5 y 3)
+- `35` → `"FizzBuzzBuzz"` (contiene 3 y 5 y es divisible por 5)
+
+---
+
+## Enlaces de referencia
+
+- [Coding Dojo – FizzBuzz](https://codingdojo.org/kata/FizzBuzz/)
 

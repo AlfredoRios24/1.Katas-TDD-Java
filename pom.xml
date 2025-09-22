@@ -11,6 +11,7 @@
 
     <modules>
         <module>FizzBuzz</module>
+        <module>StringCalculator</module>
     </modules>
 
     <properties>
