@@ -48,7 +48,7 @@ Crear un método `add(String numbers)` que:
 - Validar errores de separador incorrecto:
 - `"//|\n1|2,3"` → `"'|' expected but ',' found at position 3."`
 
-### 6. Números negativos
+### 6. Números negativos POR AQUI->
 - No se permiten negativos.
 - Retornar mensaje con todos los negativos encontrados:
 - `"-1,2"` → `"Negative not allowed: -1"`
