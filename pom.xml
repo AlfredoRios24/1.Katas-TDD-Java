@@ -12,6 +12,7 @@
     <modules>
         <module>FizzBuzz</module>
         <module>StringCalculator</module>
+        <module>BowlingGame</module>
     </modules>
 
     <properties>
