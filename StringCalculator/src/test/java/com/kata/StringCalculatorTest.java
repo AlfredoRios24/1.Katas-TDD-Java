@@ -7,6 +7,7 @@ public class StringCalculatorTest {
 
     private final StringCalculator calculator = new StringCalculator();
 
+    // 1️⃣ Suma simple: cadena vacía, un número o dos números separados por coma
     @Test
     void shouldReturnZeroForEmptyString() {
         assertEquals("0", calculator.add(""));
@@ -22,25 +23,25 @@ public class StringCalculatorTest {
         assertEquals("3", calculator.add("1,2"));
     }
 
-    // 2. Múltiples números
+    // 2️⃣ Múltiples números: cualquier cantidad de números separados por coma
     @Test
     void shouldReturnSumOfMultipleNumbers() {
         assertEquals("10", calculator.add("1,2,3,4"));
     }
 
-    // 3. Nueva línea como separador
+    // 3️⃣ Nueva línea como separador: \n se permite como delimitador
     @Test
     void shouldReturnSumWithNewlineSeparator() {
         assertEquals("10", calculator.add("1\n2,3,4"));
     }
 
-    // 4. Separador final: - No permitir que la entrada termine con un separador
+    // 4️⃣ Separador final: no se permite que la cadena termine con un separador
     @Test
     void shouldReturnErrorWhenInputEndsWithSeparator() {
         assertEquals("Number expected but EOF found", calculator.add("1,3,"));
     }
 
-    // 5. Separadores personalizados: permitir delimitadores personalizados
+    // 5️⃣ Separadores personalizados: delimitadores de un caracter o largos
     @Test
     void shouldSupportCustomSingleCharacterDelimiter() {
         assertEquals("3", calculator.add("//;\n1;2"));
@@ -52,12 +53,14 @@ public class StringCalculatorTest {
         assertEquals("5", calculator.add("//sep\n2sep3"));
     }
 
+    // 5️⃣ Validación de separador incorrecto
     @Test
     void shouldReturnErrorForIncorrectSeparator() {
         assertEquals("'|' expected but ',' found at position 4.", calculator.add("//|\n1|2,3"));
+        assertEquals("'sep' expected but ',' found at position 5.", calculator.add("//sep\n2sep,3"));
     }
 
-    // 6. Números negativos: No se permiten negativos y retornar mensaje
+    // 6️⃣ Números negativos: no permitidos, retornar mensaje con todos los negativos
     @Test
     void shouldReturnErrorForSingleNegative() {
         assertEquals("Negative not allowed: -1", calculator.add("-1,2"));
@@ -78,7 +81,11 @@ public class StringCalculatorTest {
         assertEquals("Negative not allowed: -2", calculator.add("//;\n1;-2;3"));
     }
 
-    //7. Múltiples errores: Retornar todos los errores detectados
-
-
+    // 7️⃣ Múltiples errores: combinar errores de número vacío y negativos
+    @Test
+    void shouldReturnMultipleErrorsWithEmptyTokenAndNegative() {
+        String input = "//;\n-1;;-2";
+        String expected = "Negative not allowed: -1, -2\nNumber expected but '' found at position 4.";
+        assertEquals(expected, calculator.add(input));
+    }
 }

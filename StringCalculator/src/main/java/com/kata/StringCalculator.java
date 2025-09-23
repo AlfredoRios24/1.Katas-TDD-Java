@@ -29,14 +29,13 @@ public class StringCalculator {
 
         int sum = 0;
         int pos = 0;
-        // Lista para almacenar todos los números negativos encontrados
         StringBuilder negatives = new StringBuilder();
+        StringBuilder errors = new StringBuilder();
 
         while (pos < numbersPart.length()) {
             int nextDelimiterPos;
             String token;
 
-            // Determinar la posición del siguiente separador
             if (customDelimiter != null) {
                 nextDelimiterPos = numbersPart.indexOf(customDelimiter, pos);
             } else {
@@ -61,39 +60,44 @@ public class StringCalculator {
                 if (token.contains(",") || token.contains("\n")) {
                     char found = token.contains(",") ? ',' : '\n';
                     int errorPos = pos + token.indexOf(found) + 1;
-                    return "'" + customDelimiter + "' expected but '" + found + "' found at position " + errorPos + ".";
+                    if (errors.length() > 0) errors.append("\n");
+                    errors.append("'").append(customDelimiter).append("' expected but '")
+                            .append(found).append("' found at position ").append(errorPos).append(".");
+                    break; // Después de encontrar separador incorrecto no seguimos sumando
                 }
             }
 
-            int num = Integer.parseInt(token);
-            // Si es negativo, lo añadimos a la lista de negativos
-            if (num < 0) {
-                if (negatives.length() > 0) {
-                    negatives.append(", ");
+            if (token.isEmpty()) {
+                if (errors.length() > 0) errors.append("\n");
+                errors.append("Number expected but '' found at position ").append(pos + 1).append(".");
+            } else {
+                try {
+                    int num = Integer.parseInt(token);
+                    if (num < 0) {
+                        if (negatives.length() > 0) negatives.append(", ");
+                        negatives.append(num);
+                    } else {
+                        sum += num;
+                    }
+                } catch (NumberFormatException e) {
+                    if (errors.length() > 0) errors.append("\n");
+                    errors.append("Invalid number '").append(token).append("' at position ").append(pos + 1).append(".");
                 }
-                negatives.append(num);
             }
 
-            sum += num;
             pos = nextDelimiterPos + (customDelimiter != null ? customDelimiter.length() : 1);
         }
 
-        // Si hay negativos, retornamos el mensaje de error
+        StringBuilder result = new StringBuilder();
         if (negatives.length() > 0) {
-            return "Negative not allowed: " + negatives.toString();
+            result.append("Negative not allowed: ").append(negatives);
+        }
+        if (errors.length() > 0) {
+            if (result.length() > 0) result.append("\n");
+            result.append(errors);
         }
 
-        return String.valueOf(sum);
-    }
-
-    public static void main(String[] args) {
-        StringCalculator calc = new StringCalculator();
-
-        System.out.println(calc.add(""));                   // 0
-        System.out.println(calc.add("1,2"));                // 3
-        System.out.println(calc.add("//;\n1;2"));           // 3
-        System.out.println(calc.add("//|\n1|2|3"));         // 6
-        System.out.println(calc.add("//sep\n2sep3"));       // 5
-        System.out.println(calc.add("//|\n1|2,3"));         // '|' expected but ',' found at position 3.
+        return result.length() > 0 ? result.toString() : String.valueOf(sum);
     }
 }
+
