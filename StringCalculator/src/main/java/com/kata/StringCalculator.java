@@ -1,103 +1,92 @@
 package com.kata;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StringCalculator {
 
     public String add(String numbers) {
+        // 1️⃣ Caso vacío o nulo
         if (numbers == null || numbers.isEmpty()) {
             return "0";
         }
 
-        String customDelimiter = null;
+        // 2️⃣ Delimitador por defecto: coma o nueva línea
+        String delimiter = ",|\n";
         String numbersPart = numbers;
 
-        // Separador personalizado
+        // 3️⃣ Separador personalizado
         if (numbers.startsWith("//")) {
             int newlineIndex = numbers.indexOf("\n");
             if (newlineIndex == -1) {
+                // Error si no hay salto de línea tras el delimitador
                 return "Number expected but EOF found";
             }
-            customDelimiter = numbers.substring(2, newlineIndex);
+            // Escapar caracteres especiales de regex
+            delimiter = java.util.regex.Pattern.quote(numbers.substring(2, newlineIndex));
             numbersPart = numbers.substring(newlineIndex + 1);
         }
 
-        // Verificar si termina con separador
-        if (numbersPart.isEmpty() ||
-                numbersPart.endsWith(",") || numbersPart.endsWith("\n") ||
-                (customDelimiter != null && numbersPart.endsWith(customDelimiter))) {
+        // 4️⃣ Entrada vacía después de delimitador personalizado
+        if (numbersPart.isEmpty()) {
+            return "0";
+        }
+
+        // 5️⃣ Detectar separador final
+        if (numbersPart.matches(".*(" + delimiter + ")$")) {
             return "Number expected but EOF found";
         }
 
+        // 6️⃣ Separar tokens según delimitador
+        String[] tokens = numbersPart.split(delimiter, -1);
+        List<Integer> negatives = new ArrayList<>();
+        List<String> errors = new ArrayList<>();
         int sum = 0;
-        int pos = 0;
-        StringBuilder negatives = new StringBuilder();
-        StringBuilder errors = new StringBuilder();
+        int pos = 0; // Posición en la cadena original
 
-        while (pos < numbersPart.length()) {
-            int nextDelimiterPos;
-            String token;
-
-            if (customDelimiter != null) {
-                nextDelimiterPos = numbersPart.indexOf(customDelimiter, pos);
-            } else {
-                int commaPos = numbersPart.indexOf(",", pos);
-                int newlinePos = numbersPart.indexOf("\n", pos);
-
-                if (commaPos == -1) commaPos = numbersPart.length();
-                if (newlinePos == -1) newlinePos = numbersPart.length();
-
-                nextDelimiterPos = Math.min(commaPos, newlinePos);
-            }
-
-            if (nextDelimiterPos != -1 && nextDelimiterPos < numbersPart.length()) {
-                token = numbersPart.substring(pos, nextDelimiterPos);
-            } else {
-                token = numbersPart.substring(pos);
-                nextDelimiterPos = numbersPart.length();
-            }
-
-            // Detectar separador incorrecto
-            if (customDelimiter != null) {
-                if (token.contains(",") || token.contains("\n")) {
-                    char found = token.contains(",") ? ',' : '\n';
-                    int errorPos = pos + token.indexOf(found) + 1;
-                    if (errors.length() > 0) errors.append("\n");
-                    errors.append("'").append(customDelimiter).append("' expected but '")
-                            .append(found).append("' found at position ").append(errorPos).append(".");
-                    break; // Después de encontrar separador incorrecto no seguimos sumando
-                }
-            }
-
+        // 7️⃣ Recorrer tokens
+        for (String token : tokens) {
+            // 7a️⃣ Detectar token vacío
             if (token.isEmpty()) {
-                if (errors.length() > 0) errors.append("\n");
-                errors.append("Number expected but '' found at position ").append(pos + 1).append(".");
+                errors.add("Number expected but '' found at position " + pos + ".");
             } else {
                 try {
                     int num = Integer.parseInt(token);
+
+                    // 7b️⃣ Detectar número negativo
                     if (num < 0) {
-                        if (negatives.length() > 0) negatives.append(", ");
-                        negatives.append(num);
+                        negatives.add(num);
                     } else {
+                        // 7c️⃣ Sumar número positivo
                         sum += num;
                     }
                 } catch (NumberFormatException e) {
-                    if (errors.length() > 0) errors.append("\n");
-                    errors.append("Invalid number '").append(token).append("' at position ").append(pos + 1).append(".");
+                    // 7d️⃣ Detectar número inválido (no entero)
+                    errors.add("Invalid number '" + token + "' at position " + pos + ".");
                 }
             }
 
-            pos = nextDelimiterPos + (customDelimiter != null ? customDelimiter.length() : 1);
+            // 7e️⃣ Avanzar posición: longitud del token + 1 (para el separador eliminado en split)
+            pos += token.length() + 1;
         }
 
-        StringBuilder result = new StringBuilder();
-        if (negatives.length() > 0) {
-            result.append("Negative not allowed: ").append(negatives);
-        }
-        if (errors.length() > 0) {
-            if (result.length() > 0) result.append("\n");
-            result.append(errors);
+        // 8️⃣ Construir mensaje de errores por números negativos
+        if (!negatives.isEmpty()) {
+            StringBuilder negMsg = new StringBuilder("Negative not allowed: ");
+            for (int i = 0; i < negatives.size(); i++) {
+                if (i > 0) negMsg.append(", ");
+                negMsg.append(negatives.get(i));
+            }
+            // Colocar el mensaje de negativos al principio
+            errors.add(0, negMsg.toString());
         }
 
-        return result.length() > 0 ? result.toString() : String.valueOf(sum);
+        // 9️⃣ Retornar errores si existen
+        if (!errors.isEmpty()) {
+            return String.join("\n", errors);
+        }
+
+        // 🔟 Retornar suma si no hay errores
+        return String.valueOf(sum);
     }
 }
-

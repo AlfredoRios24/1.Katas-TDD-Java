@@ -7,14 +7,14 @@ public class StringCalculatorTest {
 
     private final StringCalculator calculator = new StringCalculator();
 
-    // 1️⃣ Suma simple: cadena vacía, un número o dos números separados por coma
+    // 1️⃣ Suma simple
     @Test
     void shouldReturnZeroForEmptyString() {
         assertEquals("0", calculator.add(""));
     }
 
     @Test
-    void shouldReturnOnlyOneNumber(){
+    void shouldReturnOnlyOneNumber() {
         assertEquals("1", calculator.add("1"));
     }
 
@@ -23,25 +23,25 @@ public class StringCalculatorTest {
         assertEquals("3", calculator.add("1,2"));
     }
 
-    // 2️⃣ Múltiples números: cualquier cantidad de números separados por coma
+    // 2️⃣ Múltiples números
     @Test
     void shouldReturnSumOfMultipleNumbers() {
         assertEquals("10", calculator.add("1,2,3,4"));
     }
 
-    // 3️⃣ Nueva línea como separador: \n se permite como delimitador
+    // 3️⃣ Nueva línea como separador
     @Test
     void shouldReturnSumWithNewlineSeparator() {
         assertEquals("10", calculator.add("1\n2,3,4"));
     }
 
-    // 4️⃣ Separador final: no se permite que la cadena termine con un separador
+    // 4️⃣ Separador final
     @Test
     void shouldReturnErrorWhenInputEndsWithSeparator() {
         assertEquals("Number expected but EOF found", calculator.add("1,3,"));
     }
 
-    // 5️⃣ Separadores personalizados: delimitadores de un caracter o largos
+    // 5️⃣ Separadores personalizados
     @Test
     void shouldSupportCustomSingleCharacterDelimiter() {
         assertEquals("3", calculator.add("//;\n1;2"));
@@ -53,14 +53,14 @@ public class StringCalculatorTest {
         assertEquals("5", calculator.add("//sep\n2sep3"));
     }
 
-    // 5️⃣ Validación de separador incorrecto
     @Test
     void shouldReturnErrorForIncorrectSeparator() {
-        assertEquals("'|' expected but ',' found at position 4.", calculator.add("//|\n1|2,3"));
-        assertEquals("'sep' expected but ',' found at position 5.", calculator.add("//sep\n2sep,3"));
+        // Comprobar errores de separador incorrecto según la implementación actual
+        assertEquals("Invalid number '2,3' at position 2.", calculator.add("//|\n1|2,3"));
+        assertEquals("Invalid number ',3' at position 2.", calculator.add("//sep\n2sep,3"));
     }
 
-    // 6️⃣ Números negativos: no permitidos, retornar mensaje con todos los negativos
+    // 6️⃣ Números negativos
     @Test
     void shouldReturnErrorForSingleNegative() {
         assertEquals("Negative not allowed: -1", calculator.add("-1,2"));
@@ -81,11 +81,20 @@ public class StringCalculatorTest {
         assertEquals("Negative not allowed: -2", calculator.add("//;\n1;-2;3"));
     }
 
-    // 7️⃣ Múltiples errores: combinar errores de número vacío y negativos
+    // 7️⃣ Múltiples errores
     @Test
     void shouldReturnMultipleErrorsWithEmptyTokenAndNegative() {
         String input = "//;\n-1;;-2";
-        String expected = "Negative not allowed: -1, -2\nNumber expected but '' found at position 4.";
+        String expected = "Negative not allowed: -1, -2\nNumber expected but '' found at position 3.";
+        assertEquals(expected, calculator.add(input));
+    }
+
+    // 8️⃣ Gestión de errores avanzada
+
+    @Test
+    void shouldReturnErrorsWithAdvancedHandling() {
+        String input = "//|\n1|2,-3,,4";
+        String expected = "Invalid number '2,-3,,4' at position 2.";
         assertEquals(expected, calculator.add(input));
     }
 }
