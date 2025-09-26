@@ -13,6 +13,7 @@
         <module>FizzBuzz</module>
         <module>StringCalculator</module>
         <module>BowlingGame</module>
+        <module>RomanNumerals</module>
     </modules>
 
     <properties>

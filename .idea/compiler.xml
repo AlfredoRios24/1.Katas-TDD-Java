@@ -6,8 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="FizzBuzz" />
         <module name="StringCalculator" />
-        <module name="FuzzBizz" />
+        <module name="RomanNumerals" />
         <module name="BowlingGame" />
       </profile>
     </annotationProcessing>
