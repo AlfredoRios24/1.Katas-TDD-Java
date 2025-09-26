@@ -7,9 +7,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="01-fizzbuzz" />
-        <module name="04-romannumerals" />
+        <module name="07-gameoflife" />
         <module name="02-stringcalculator" />
         <module name="03-bowlinggame" />
+        <module name="06-primefactors" />
+        <module name="08-bankocr" />
+        <module name="05-leapyear" />
+        <module name="11-tennis" />
+        <module name="09-marsrover" />
+        <module name="10-katalog" />
+        <module name="04-romannumerals" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
