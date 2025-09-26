@@ -6,11 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="FizzBuzz" />
-        <module name="StringCalculator" />
-        <module name="RomanNumerals" />
-        <module name="BowlingGame" />
+        <module name="01-fizzbuzz" />
+        <module name="04-romannumerals" />
+        <module name="02-stringcalculator" />
+        <module name="03-bowlinggame" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="01.asdsa" target="21" />
+    </bytecodeTargetLevel>
   </component>
 </project>

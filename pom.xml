@@ -10,10 +10,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>FizzBuzz</module>
-        <module>StringCalculator</module>
-        <module>BowlingGame</module>
-        <module>RomanNumerals</module>
+        <module>01-fizzbuzz</module>
+        <module>02-stringcalculator</module>
+        <module>03-bowlinggame</module>
+        <module>04-romannumerals</module>
     </modules>
 
     <properties>

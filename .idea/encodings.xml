@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/BowlingGame/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/BowlingGame/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/FizzBuzz/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/FizzBuzz/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/01-fizzbuzz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/01-fizzbuzz/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/01.asdsa/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/01.asdsa/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/02-stringcalculator/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/02-stringcalculator/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/03-bowlinggame/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/03-bowlinggame/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/04-romannumerals/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/04-romannumerals/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FuzzBizz/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/FuzzBizz/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/RomanNumerals/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/RomanNumerals/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/StringCalculator/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/StringCalculator/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
