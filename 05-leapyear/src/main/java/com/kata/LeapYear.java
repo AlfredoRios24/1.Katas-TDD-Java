@@ -12,14 +12,27 @@ public class LeapYear {
      * @throws IllegalArgumentException si el año es menor o igual a 0
      */
     public static boolean isLeapYear(int year) {
-        if (year <= 0) {
+        if (year <= 0  ) {
             throw new IllegalArgumentException("El año debe ser mayor que 0: " + year);
+
         }
+        if (year < 1582) {
+            throw new IllegalArgumentException("El calednario gregoriano comienza en 1582: " + year);
+        }
+
 
         // Regla del calendario gregoriano
         if (year % 400 == 0) return true;
         if (year % 100 == 0) return false;
         return year % 4 == 0;
+    }
+
+    public static boolean[] validateLeapYears(int[] years) {
+        boolean[] results = new boolean[years.length];
+        for (int i = 0; i < years.length; i++) {
+            results[i] = isLeapYear(years[i]);
+        }
+        return results;
     }
 
     public static void main(String[] args) {
