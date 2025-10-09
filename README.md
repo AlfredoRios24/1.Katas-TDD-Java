@@ -23,7 +23,7 @@ Cada Kata se encuentra en un módulo independiente con su propia implementación
 
 07 - Game of Life
 
-08 - Bank OCR -> Actualmente Testing en construcción.
+08 - Bank OCR 
 
 09 - Mars Rover -> Testing: Proximamente en construcción.
 
