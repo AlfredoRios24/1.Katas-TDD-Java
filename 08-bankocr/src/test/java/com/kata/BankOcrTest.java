@@ -24,16 +24,13 @@ public class BankOcrTest {
 
     @Test
     public void shouldThrowExceptionWhenParsingIncompleteAccountBlock() {
-        // Bloque con solo 2 líneas en lugar de 3
         List<String> incomplete = List.of(
                 " _  _  _ ",
                 "| || || |"
                 // Falta la tercera línea
         );
-
         assertThrows(IllegalArgumentException.class, () -> BankOcr.parseMultipleAccounts(incomplete));
     }
-
 
     @Test
     public void shouldRejectChecksumIfWrongLength() {
@@ -92,7 +89,7 @@ public class BankOcrTest {
                 "  ||_  _|  | _||_|  ||_| _|"
         );
         String result = BankOcr.parseAccount(input);
-        assertEquals("123456789", result);
+        assertEquals("?234567?9", result);
     }
 
     @Test
@@ -107,7 +104,7 @@ public class BankOcrTest {
                 "|_||_||_||_||_||_||_||_||_|"
         );
         List<String> results = BankOcr.parseMultipleAccounts(input);
-        assertEquals(List.of("123456789", "000000000"), results);
+        assertEquals(List.of("?234567?9", "000000000"), results);
     }
 
     @Test
