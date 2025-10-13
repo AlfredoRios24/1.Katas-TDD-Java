@@ -25,7 +25,7 @@ Cada Kata se encuentra en un módulo independiente con su propia implementación
 
 08 - Bank OCR 
 
-09 - Mars Rover -> Testing: Proximamente en construcción.
+09 - Mars Rover -> Actual: En construcción.
 
 10 - Kata Log -> Testing: Proximamente en construcción.
 
