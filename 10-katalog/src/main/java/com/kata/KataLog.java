@@ -31,7 +31,20 @@ public class KataLog {
         void print() {
             entries.forEach(System.out::println);
         }
+
+
+        List<LogEntry> filter(String keyword) {
+            List<LogEntry> filtered = new ArrayList<>();
+            for (LogEntry entry : entries) {
+                if (entry.message.toLowerCase().contains(keyword.toLowerCase())) {
+                    filtered.add(entry);
+                }
+            }
+            return filtered;
+        }
     }
+
+
 
     public static void main(String[] args) {
         System.out.println("=== Kata Log ===");
