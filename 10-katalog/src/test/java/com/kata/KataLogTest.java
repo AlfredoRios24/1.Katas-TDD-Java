@@ -1,6 +1,7 @@
 package com.kata;
 
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,57 +9,83 @@ import static org.junit.jupiter.api.Assertions.*;
 public class KataLogTest {
 
     @Test
-    void shouldStoreOnLogMessage(){
+    void shouldAddLogEntries() {
         KataLog.Logger logger = new KataLog.Logger();
 
-        logger.log("Inicio del sistema");
+        logger.log("Inicio del sistema", KataLog.Level.INFO);
+        logger.log("Advertencia de memoria", KataLog.Level.WARN);
+        logger.log("Error crítico", KataLog.Level.ERROR);
 
-        assertEquals(1, logger.entries.size());
-        assertTrue(logger.entries.get(0).message.contains("Inicio del sistema"));
-
-        }
-
-    @Test
-    void shouldKeepOrderOfLogMessages() {
-        KataLog.Logger logger = new KataLog.Logger();
-
-        logger.log("Primero");
-        logger.log("Segundo");
-        logger.log("Tercero");
-
-        List<KataLog.LogEntry> entries = logger.entries;
-        assertEquals("Primero", entries.get(0).message);
-        assertEquals("Segundo", entries.get(1).message);
-        assertEquals("Tercero", entries.get(2).message);
+        assertEquals(3, logger.entries.size());
+        assertEquals("Inicio del sistema", logger.entries.get(0).message);
+        assertEquals("Advertencia de memoria", logger.entries.get(1).message);
+        assertEquals("Error crítico", logger.entries.get(2).message);
     }
 
     @Test
-    void shouldFilterLogsByKeyword() {
+    void shouldFilterLogsByText() {
         KataLog.Logger logger = new KataLog.Logger();
 
-        logger.log("Inicio del sistema");
-        logger.log("Error al conectar a la base de datos");
-        logger.log("Proceso completado con éxito");
-        logger.log("Error al guardar los datos");
+        logger.log("Inicio del sistema", KataLog.Level.INFO);
+        logger.log("Fallo en el módulo 3", KataLog.Level.ERROR);
+        logger.log("Sistema estable", KataLog.Level.INFO);
 
-        List<KataLog.LogEntry> filtered = logger.filter("error");
+        List<KataLog.LogEntry> filtered = logger.filterByText("sistema");
 
         assertEquals(2, filtered.size());
-        assertTrue(filtered.get(0).message.contains("Error"));
-        assertTrue(filtered.get(1).message.contains("Error"));
+        assertTrue(filtered.stream().allMatch(e -> e.message.toLowerCase().contains("sistema")));
     }
 
     @Test
-    void shouldReturnEmptyListWhenNoKeywordMatches() {
+    void shouldReturnEmptyWhenNoMatchInTextFilter() {
         KataLog.Logger logger = new KataLog.Logger();
 
-        logger.log("Inicio del sistema");
-        logger.log("Proceso completado");
+        logger.log("Inicio del sistema", KataLog.Level.INFO);
+        logger.log("Todo correcto", KataLog.Level.INFO);
 
-        List<KataLog.LogEntry> filtered = logger.filter("error");
+        List<KataLog.LogEntry> filtered = logger.filterByText("error");
 
         assertTrue(filtered.isEmpty());
     }
 
+    @Test
+    void shouldFilterLogsByLevel() {
+        KataLog.Logger logger = new KataLog.Logger();
 
+        logger.log("Todo bien", KataLog.Level.INFO);
+        logger.log("Cuidado", KataLog.Level.WARN);
+        logger.log("Fallo grave", KataLog.Level.ERROR);
+        logger.log("Aviso adicional", KataLog.Level.WARN);
+
+        List<KataLog.LogEntry> warnings = logger.filterByLevel(KataLog.Level.WARN);
+
+        assertEquals(2, warnings.size());
+        assertTrue(warnings.stream().allMatch(e -> e.level == KataLog.Level.WARN));
+    }
+
+    @Test
+    void shouldReturnEmptyWhenNoLogsOfGivenLevel() {
+        KataLog.Logger logger = new KataLog.Logger();
+
+        logger.log("Todo correcto", KataLog.Level.INFO);
+        logger.log("Otro mensaje", KataLog.Level.INFO);
+
+        List<KataLog.LogEntry> errors = logger.filterByLevel(KataLog.Level.ERROR);
+
+        assertTrue(errors.isEmpty());
+    }
+
+    @Test
+    void shouldAddLogsWithDifferentLevels() {
+        KataLog.Logger logger = new KataLog.Logger();
+
+        logger.log("Mensaje informativo", KataLog.Level.INFO);
+        logger.log("Advertencia", KataLog.Level.WARN);
+        logger.log("Error crítico", KataLog.Level.ERROR);
+
+        assertEquals(3, logger.entries.size());
+        assertEquals(KataLog.Level.INFO, logger.entries.get(0).level);
+        assertEquals(KataLog.Level.WARN, logger.entries.get(1).level);
+        assertEquals(KataLog.Level.ERROR, logger.entries.get(2).level);
+    }
 }
