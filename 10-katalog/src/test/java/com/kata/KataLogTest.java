@@ -88,4 +88,72 @@ public class KataLogTest {
         assertEquals(KataLog.Level.WARN, logger.entries.get(1).level);
         assertEquals(KataLog.Level.ERROR, logger.entries.get(2).level);
     }
+
+    @Test
+    void shouldFilterLogsByTextAndLevel() {
+        KataLog.Logger logger = new KataLog.Logger();
+
+        logger.log("Inicio del sistema", KataLog.Level.INFO);
+        logger.log("Error en el sistema", KataLog.Level.ERROR);
+        logger.log("Sistema estable", KataLog.Level.INFO);
+
+        List<KataLog.LogEntry> filtered = logger.filterByText("sistema")
+                .stream()
+                .filter(e -> e.level == KataLog.Level.ERROR)
+                .toList();
+
+        assertEquals(1, filtered.size());
+        assertEquals("Error en el sistema", filtered.get(0).message);
+    }
+
+    @Test
+    void shouldIgnoreCaseWhenFilteringByText() {
+        KataLog.Logger logger = new KataLog.Logger();
+
+        logger.log("Error Crítico en el Sistema", KataLog.Level.ERROR);
+        logger.log("todo bien", KataLog.Level.INFO);
+
+        List<KataLog.LogEntry> filtered = logger.filterByText("sistema");
+
+        assertEquals(1, filtered.size());
+        assertEquals("Error Crítico en el Sistema", filtered.get(0).message);
+    }
+
+    @Test
+    void shouldHandleNullOrEmptyMessagesGracefully() {
+        KataLog.Logger logger = new KataLog.Logger();
+
+        logger.log(null, KataLog.Level.INFO);
+        logger.log("", KataLog.Level.ERROR);
+
+        assertEquals(2, logger.entries.size());
+        assertNull(logger.entries.get(0).message);
+        assertEquals("", logger.entries.get(1).message);
+    }
+
+    @Test
+    void shouldPreserveInsertionOrder() {
+        KataLog.Logger logger = new KataLog.Logger();
+
+        logger.log("Primero", KataLog.Level.INFO);
+        logger.log("Segundo", KataLog.Level.WARN);
+        logger.log("Tercero", KataLog.Level.ERROR);
+
+        assertEquals("Primero", logger.entries.get(0).message);
+        assertEquals("Segundo", logger.entries.get(1).message);
+        assertEquals("Tercero", logger.entries.get(2).message);
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenNoLogsPresent() {
+        KataLog.Logger logger = new KataLog.Logger();
+
+        List<KataLog.LogEntry> filteredByText = logger.filterByText("algo");
+        List<KataLog.LogEntry> filteredByLevel = logger.filterByLevel(KataLog.Level.ERROR);
+
+        assertTrue(filteredByText.isEmpty());
+        assertTrue(filteredByLevel.isEmpty());
+    }
+
+
 }
