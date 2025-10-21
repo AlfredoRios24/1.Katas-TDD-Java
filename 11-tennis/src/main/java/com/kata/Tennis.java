@@ -17,7 +17,7 @@ public class Tennis {
                     case 0 -> "Love-All";
                     case 1 -> "Fifteen-All";
                     case 2 -> "Thirty-All";
-                    case 3 -> "Forty-All";
+                    // case 3 -> "Forty-All";
                     default -> "Deuce";
                 };
             } else if (player1 >= 4 || player2 >= 4) {
