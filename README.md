@@ -25,11 +25,11 @@ Cada Kata se encuentra en un módulo independiente con su propia implementación
 
 08 - Bank OCR 
 
-09 - Mars Rover -> Actual: En construcción.
+09 - Mars Rover 
 
-10 - Kata Log -> Testing: Proximamente en construcción.
+10 - Kata Log 
 
-11 - Tennis -> Testing: Proximamente en construcción.
+11 - Tennis 
 
 
 🧪 Enfoque de desarrollo

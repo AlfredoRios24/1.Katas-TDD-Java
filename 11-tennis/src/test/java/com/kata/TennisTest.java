@@ -88,5 +88,32 @@ public class TennisTest {
         assertEquals("Thirty-Love", game.getScore());
     }
 
+    @Test
+    void wonPointIncrementsCorrectPlayer() {
+        Tennis.Game game = new Tennis.Game();
+        game.wonPoint("player1");
+        assertEquals("Fifteen-Love", game.getScore());
+        game.wonPoint("player1");
+        assertEquals("Thirty-Love", game.getScore());
+    }
+
+    @Test
+    void advantageAndBackToDeuce() {
+        Tennis.Game game = new Tennis.Game();
+        for (int i=0;i<3;i++){ game.wonPoint("player1"); game.wonPoint("player2"); }
+        assertEquals("Deuce", game.getScore());
+        game.wonPoint("player1");
+        assertEquals("Advantage player1", game.getScore());
+        game.wonPoint("player2");
+        assertEquals("Deuce", game.getScore());
+    }
+
+    @Test
+    void longGameWinByTwo() {
+        Tennis.Game game = new Tennis.Game();
+        for(int i=0;i<8;i++) game.wonPoint("player1"); // 8
+        for(int i=0;i<6;i++) game.wonPoint("player2"); // 6
+        assertEquals("Win for player1", game.getScore()); // 8-6 -> win
+    }
 
 }
