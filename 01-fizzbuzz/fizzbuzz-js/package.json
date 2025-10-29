@@ -12,5 +12,9 @@
   "type": "commonjs",
   "devDependencies": {
     "vitest": "^3.2.4"
+  },
+  "scripts": {
+    "start": "node fizzbuzz.js",
+    "test": "vitest run"
   }
 }
